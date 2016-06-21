@@ -44,6 +44,7 @@ class FlowplayerDrivePlugin extends BasePlugin
             'username' => array(AttributeType::String, 'default' => 'Test'),
             'password' => array(AttributeType::String, 'default' => 'Test'),
             'userid' => array(AttributeType::String, 'default' => 'Test'),
+            'cache_lifetime' => array(AttributeType::Number, 'default' => 86400),
         );
     }
     
@@ -52,5 +53,16 @@ class FlowplayerDrivePlugin extends BasePlugin
         return craft()->templates->render('flowplayerdrive/settings', array(
             'settings' => $this->getSettings()
         ));
+    }
+    
+    public function prepSettings($settings)
+    {
+        if($settings['clear_cache'] === '1'){
+	        craft()->cache->delete('flowplayerdrive-videolist');
+	        // Use error message because Notice will be overwritten by CP
+	        craft()->userSession->setError(Craft::t('Cache cleared.'));
+        }
+
+        return $settings;
     }
 }

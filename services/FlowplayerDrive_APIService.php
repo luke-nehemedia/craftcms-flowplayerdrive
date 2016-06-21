@@ -49,6 +49,17 @@ class FlowplayerDrive_APIService extends BaseApplicationComponent
 	 */
 	protected $uri = 'https://drive.api.flowplayer.org/';
 
+	
+	/**
+	 * Toggle whether a connection is established and the user logged in
+	 * 
+	 * (default value: false)
+	 * 
+	 * @var bool
+	 * @access protected
+	 */
+	protected $logged_in = false;
+
 	/**
 	 * __construct functio
 	 *
@@ -61,8 +72,6 @@ class FlowplayerDrive_APIService extends BaseApplicationComponent
 	{
 		$this->client = new \Guzzle\Http\Client;
 		$this->settings = craft()->plugins->getPlugin('flowplayerdrive')->getSettings();
-
-		$this->login();
 	}
 	
 	/**
@@ -73,16 +82,22 @@ class FlowplayerDrive_APIService extends BaseApplicationComponent
 	 */
 	protected function login()
 	{
-		$response = $this->client->post($this->uri.'login',[],['username' => $this->settings->username, 'password' => $this->settings->password])->send();
-
-		if($response->getStatusCode() != '200'){
-			throw new Exception("Error loggin in to flowplayer API");
-			return false;
-		}else{
-			$auth_info = $response->json();
-			$this->authcode = $auth_info['user']['authcode'];
+		if($this->logged_in){
 			return true;
+		}else{
+			$response = $this->client->post($this->uri.'login',[],['username' => $this->settings->username, 'password' => $this->settings->password])->send();
+
+			if($response->getStatusCode() != '200'){
+				throw new Exception("Error loggin in to flowplayer API");
+				return false;
+			}else{
+				$auth_info = $response->json();
+				$this->authcode = $auth_info['user']['authcode'];
+				$this->logged_in = true;
+				return true;
+			}
 		}
+		
 	}
 
 	/**
@@ -92,14 +107,23 @@ class FlowplayerDrive_APIService extends BaseApplicationComponent
 	 * @return void
 	 */
 	public function getVideos()
-	{
-		$response = $this->client->get($this->uri.'videos?authcode='.$this->authcode)->send();
-
-		if($response->getStatusCode() != '200'){
-			throw new Exception("Error getting Video list", $response->getStatusCode());
-			return false;
+	{	
+		$this->login();
+		
+		$cached_result = craft()->cache->get('flowplayerdrive-videolist');
+		
+		if($cached_result !== false){
+			return $cached_result;		
 		}else{
-			return $response->json();
+			$response = $this->client->get($this->uri.'videos?authcode='.$this->authcode)->send();
+			
+			if($response->getStatusCode() != '200'){
+				throw new Exception("Error getting Video list", $response->getStatusCode());
+				return false;
+			}else{
+				craft()->cache->set('flowplayerdrive-videolist',$response->json(),$this->settings->cache_lifetime);
+				return $response->json();
+			}	
 		}
 	}
 
@@ -133,6 +157,8 @@ class FlowplayerDrive_APIService extends BaseApplicationComponent
 	 */
 	public function getVideoInfo($video_id)
 	{
+		$this->login();
+		
 		$response = $this->client->get($this->uri.'videos/'.$video_id.'?authcode='.$this->authcode)->send();
 
 		$result = $response->json();
