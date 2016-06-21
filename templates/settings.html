@@ -1,0 +1,35 @@
+{% set title = "Flowplayer API"|t %}
+{% import "_includes/forms" as forms %}
+
+<h2>{{'Settings'|t}}</h2>
+
+{{ forms.textField({
+        label: 'Username'|t,
+        id: 'username',
+        name: 'username',
+        value: settings.username,
+        placeholder: 'Username'|t,
+        instructions: ''|t,
+    }) }}
+    
+{{ forms.passwordField({
+        label: 'Password'|t,
+        id: 'password',
+        name: 'password',
+        value: settings.password,
+        placeholder: 'Password'|t,
+        instructions: ''|t,
+    }) }}
+    
+{{ forms.textField({
+        label: 'Userid'|t,
+        id: 'userid',
+        name: 'userid',
+        value: settings.userid,
+        placeholder: 'Userid'|t,
+        instructions: 'Enter your Flowplayer user-id.'|t,
+    }) }}
+    
+<h2>{{'Instructions'|t}}</h2>
+<p>{{'After you have filled out the settings you can use the new field type "Flowplayer Drive Video". Define a field and used it on your page.'|t}}</p>
+<p>{{'In your template, you can use {{ craft.flowplayerdrive.getPlayer(element) }} to display the video player.'|t}}</p>

@@ -1,0 +1,12 @@
+{#
+ # Render Template
+ # --------------------------------------
+ #
+ # This template is used by flowplayerdrive.getplayer and returns the html-code
+ # to embed the player on a website.
+ #
+ # The recommended script-version is used.
+ #}
+<script async src="//flowplayer.org/6/flowplayer.js">
+	{"src":"{{settings.userid}}/{{video.id}}","controls":true}
+</script>
