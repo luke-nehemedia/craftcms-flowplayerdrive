@@ -8,19 +8,19 @@ namespace Craft;
  * videos stored in flowplayer drive.
  *
  * @author Lucas Bares <luke@nehemedia.de>
- * @last_edit	2016-06-20
+ * @last_edit	2016-08-25
  * @extends BasePlugin
  */
 class FlowplayerDrivePlugin extends BasePlugin
 {
     function getName()
     {
-         return Craft::t('FlowplayerDrive Integration');
+         return Craft::t('flowplayerdrive_plugin_name');
     }
 
     function getVersion()
     {
-        return '0.2';
+        return '0.4';
     }
 
     function getDeveloper()
@@ -35,7 +35,7 @@ class FlowplayerDrivePlugin extends BasePlugin
 
     function getDescription()
     {
-	    return Craft::t('Adds a custom field type for videos stored on flowplayer drive');
+	    return Craft::t('flowplayerdrive_plugin_desc');
     }
     
     protected function defineSettings()
@@ -45,6 +45,20 @@ class FlowplayerDrivePlugin extends BasePlugin
             'password' => array(AttributeType::String, 'default' => 'Test'),
             'userid' => array(AttributeType::String, 'default' => 'Test'),
             'cache_lifetime' => array(AttributeType::Number, 'default' => 86400),
+            'player_adaptiveRatio' => array(AttributeType::Bool, 'default' => true),
+            'player_autoplay' => array(AttributeType::Bool, 'default' => false),
+            'player_debug' => array(AttributeType::Bool, 'default' => false),
+            'player_disabled' => array(AttributeType::Bool, 'default' => false),
+            'player_fullscreen' => array(AttributeType::Bool, 'default' => true),
+            'player_keyboard' => array(AttributeType::Bool, 'default' => true),
+            'player_live' => array(AttributeType::Bool, 'default' => false),
+            'player_mouseoutTimeout' => array(AttributeType::Number, 'default' => 5000),
+            'player_muted' => array(AttributeType::Bool, 'default' => false),
+            'player_native_fullscreen' => array(AttributeType::Bool, 'default' => false),
+            'player_ratio' => array(AttributeType::String, 'default' => '0.5625'), // equals 9/16
+            'player_splash' => array(AttributeType::Bool, 'default' => false),
+            'player_tooltip' => array(AttributeType::Bool, 'default' => true),
+            'player_volume' => array(AttributeType::Number, 'default' => 1.0),
         );
     }
     
@@ -60,7 +74,7 @@ class FlowplayerDrivePlugin extends BasePlugin
         if($settings['clear_cache'] === '1'){
 	        craft()->cache->delete('flowplayerdrive-videolist');
 	        // Use error message because Notice will be overwritten by CP
-	        craft()->userSession->setError(Craft::t('Cache cleared.'));
+	        craft()->userSession->setError(Craft::t('flowplayerdrive_settings_cache_clear_alert'));
         }
 
         return $settings;

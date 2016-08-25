@@ -6,7 +6,27 @@
  # to embed the player on a website.
  #
  # The recommended script-version is used.
+ #
+ # Update Version 0.3+4: Settings are included, defaults are ignored
  #}
+ 
 <script async src="//flowplayer.org/6/flowplayer.js">
-	{"src":"{{settings.userid}}/{{video.id}}","controls":true, "splash": true}
+	{"src":"{{settings.userid}}/{{video.id}}"
+	
+{# Player Settings - ignore the default settings #}
+{% if settings.player_adaptiveRatio != "1" %} ,"adaptiveRatio": false {% endif %}
+{% if settings.player_autoplay == "1" %} ,"autoplay": true {% endif %}
+{% if settings.player_debug == "1" %} ,"debug": true {% endif %}
+{% if settings.player_disabled == "1" %} ,"disabled": true {% endif %}
+{% if settings.player_fullscreen != "1" %} ,"fullscreen": false {% endif %}
+{% if settings.player_keyboard != "1" %} ,"keyboard": false {% endif %}
+{% if settings.player_live == "1" %} ,"live": true {% endif %}
+{% if settings.player_mouseoutTimeout != "5000" %} ,"mouseoutTimeout": {{settings.player_mouseoutTimeout}} {% endif %}
+{% if settings.player_muted == "1" %} ,"muted": true {% endif %}
+{% if settings.player_native_fullscreen == "1" %} ,"native_fullscreen": true {% endif %}
+{% if settings.player_ratio != 9/16  %} ,"ratio": {{settings.player_ratio}} {% endif %}
+{% if settings.player_splash == "1" %} ,"splash": true {% endif %}
+{% if settings.player_tooltip != "1" %} ,"tooltip": false {% endif %}
+{% if settings.player_volume != '1.0' %} ,"volume": {{settings.player_volume}} {% endif %}	
+	}
 </script>

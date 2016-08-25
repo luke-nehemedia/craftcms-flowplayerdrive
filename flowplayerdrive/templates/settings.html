@@ -1,67 +1,175 @@
 {% set title = "Flowplayer API"|t %}
 {% import "_includes/forms" as forms %}
 
-<h2>{{'Settings'|t}}</h2>
+<h2>{{'flowplayerdrive_settings_account_heading'|t}}</h2>
 
 {{ forms.textField({
-        label: 'Username'|t,
+        label: 'flowplayerdrive_settings_account_username_label'|t,
         id: 'username',
         name: 'username',
         value: settings.username,
-        placeholder: 'Username'|t,
+        placeholder: 'flowplayerdrive_settings_account_username_placeholder'|t,
         instructions: ''|t,
     }) }}
     
 {{ forms.passwordField({
-        label: 'Password'|t,
+        label: 'flowplayerdrive_settings_account_password_label'|t,
         id: 'password',
         name: 'password',
         value: settings.password,
-        placeholder: 'Password'|t,
+        placeholder: 'flowplayerdrive_settings_account_password_placeholder'|t,
         instructions: ''|t,
     }) }}
     
 {{ forms.textField({
-        label: 'Userid'|t,
+        label: 'flowplayerdrive_settings_account_userid_label'|t,
         id: 'userid',
         name: 'userid',
         value: settings.userid,
-        placeholder: 'Userid'|t,
-        instructions: 'Enter your Flowplayer user-id.'|t,
-    }) }}
-    
-{{ forms.textField({
-        label: 'Userid'|t,
-        id: 'userid',
-        name: 'userid',
-        value: settings.userid,
-        placeholder: 'Userid'|t,
-        instructions: 'Enter your Flowplayer user-id.'|t,
+        placeholder: 'flowplayerdrive_settings_account_userid_placeholder'|t,
     }) }}
 
 
-<h2>{{ 'Cache'|t }}</h2>
-<p>{{ 'To minimize waiting time and API calls, this plugin caches the list of uploaded videos. You can specify the time interval the cache will be renewed or flush the cache manually.'|t }}</p>
+<h2>{{ 'flowplayerdrive_settings_cache_heading'|t }}</h2>
+<p>{{ 'flowplayerdrive_settings_cache_desc'|t }}</p>
+
 
 {{ forms.textField({
-        label: 'Cache Lifetime'|t,
+        label: 'flowplayerdrive_settings_cache_lifetime_label'|t,
         id: 'cache_lifetime',
         name: 'cache_lifetime',
         value: settings.cache_lifetime,
-        placeholder: 'Cache Lifetime'|t,
-        instructions: 'Enter the cache lifetime in seconds. The default value is 86400 which equals one day.'|t,
+        placeholder: 'flowplayerdrive_settings_cache_lifetime_label'|t,
+        instructions: 'flowplayerdrive_settings_cache_lifetime_desc'|t,
     }) }}
 
-<label for="delete_cache">{{ 'Clear Cache'|t }}</label>
-<p>{{'Turn this on to clear (one time) the cached videolist. This can be useful if recently uploaded videos are not yet displayed.'|t}}</p>
+<div class="field">
+    <div class="heading">
+        <label for="delete_cache">{{ 'flowplayerdrive_settings_cache_clear_label'|t }}</label>
+        <p>{{'flowplayerdrive_settings_cache_clear_desc'|t}}</p>
+    </div>
+    <div class="input">
+    {{ forms.lightswitch({
+    	label: 'flowplayerdrive_settings_cache_clear_label'|t,
+    	id: 'clear_cache',
+    	name: 'clear_cache',
+    	value: 'clear_cache',
+    	instructions: 'flowplayerdrive_settings_cache_clear_desc'|t,
+    })}}
+    </div>
+</div>
+
+<h2>{{'flowplayerdrive_settings_player_heading'|t}}</h2>
+<p><strong>{{ 'flowplayerdrive_settings_player_adaptiveRatio_name'|t }}:</strong> {{'flowplayerdrive_settings_player_adaptiveRatio_desc'|t}}</p>
 {{ forms.lightswitch({
-	label: 'Delete Cache'|t,
-	id: 'clear_cache',
-	name: 'clear_cache',
-	value: 'clear_cache',
-	instructions: 'Turn this on to clear (one time) the cached videolist. This can be useful if recently uploaded videos are not yet displayed.'|t,
+	id: 'player_adaptiveRatio',
+	name: 'player_adaptiveRatio',
+	value: settings.player_adaptiveRatio,
+	on: settings.player_adaptiveRatio,
 })}}
     
-<h2>{{'Instructions'|t}}</h2>
-<p>{{'After you have filled out the settings you can use the new field type "Flowplayer Drive Video". Define a field and used it on your page.'|t}}</p>
-<p>{{'In your template, you can use {{ craft.flowplayerdrive.getPlayer(element) }} to display the video player.'|t}}</p>
+<p><strong>{{ 'flowplayerdrive_settings_player_autoplay_name'|t }}:</strong> {{'flowplayerdrive_settings_player_autoplay_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_autoplay',
+	name: 'player_autoplay',
+	value: settings.player_autoplay,
+	on: settings.player_autoplay,
+})}}
+    
+<p><strong>{{ 'flowplayerdrive_settings_player_debug_name'|t }}:</strong> {{'flowplayerdrive_settings_player_debug_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_debug',
+	name: 'player_debug',
+	on: settings.player_debug,
+})}}
+    
+
+<p><strong>{{ 'flowplayerdrive_settings_player_disabled_name'|t }}:</strong> {{'flowplayerdrive_settings_player_disabled_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_disabled',
+	name: 'player_disabled',
+	on: settings.player_disabled,
+})}}
+    
+<p><strong>{{ 'flowplayerdrive_settings_player_fullscreen_name'|t }}:</strong> {{'flowplayerdrive_settings_player_fullscreen_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_fullscreen',
+	name: 'player_fullscreen',
+	on: settings.player_fullscreen,
+})}}
+    
+<p><strong>{{ 'flowplayerdrive_settings_player_keyboard_name'|t }}:</strong> {{'flowplayerdrive_settings_player_keyboard_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_keyboard',
+	name: 'player_keyboard',
+	on: settings.player_keyboard,
+})}}
+
+
+<p><strong>{{ 'flowplayerdrive_settings_player_live_name'|t }}:</strong> {{'flowplayerdrive_settings_player_live_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_live',
+	name: 'player_live',
+	on: settings.player_live,
+})}}
+        
+{{ forms.textField({
+        label: 'flowplayerdrive_settings_player_mouseoutTimeout_name'|t,
+        id: 'player_mouseoutTimeout',
+        name: 'player_mouseoutTimeout',
+        value: settings.player_mouseoutTimeout,
+        placeholder: 5000,
+        instructions: 'flowplayerdrive_settings_player_mouseoutTimeout_desc'|t,
+    }) }}  
+    
+<p><strong>{{ 'flowplayerdrive_settings_player_muted_name'|t }}:</strong> {{'flowplayerdrive_settings_player_muted_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_muted',
+	name: 'player_muted',
+	on: settings.player_muted,
+})}}
+    
+<p><strong>{{ 'flowplayerdrive_settings_player_native_fullscreen_name'|t }}:</strong> {{'flowplayerdrive_settings_player_native_fullscreen_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_native_fullscreen',
+	name: 'player_native_fullscreen',
+	on: settings.player_native_fullscreen,
+})}}
+    
+{{ forms.textField({
+        label: 'flowplayerdrive_settings_player_ratio_name'|t,
+        id: 'player_ratio',
+        name: 'player_ratio',
+        value: settings.player_ratio,
+        instructions: 'flowplayerdrive_settings_player_ratio_desc'|t,
+    }) }}
+    
+    
+<p><strong>{{ 'flowplayerdrive_settings_player_splash_name'|t }}:</strong> {{'flowplayerdrive_settings_player_splash_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_splash',
+	name: 'player_splash',
+	on: settings.player_splash,
+})}}
+    
+    
+<p><strong>{{ 'flowplayerdrive_settings_player_tooltip_name'|t }}:</strong> {{'flowplayerdrive_settings_player_tooltip_desc'|t}}</p>
+{{ forms.lightswitch({
+	id: 'player_tooltip',
+	name: 'player_tooltip',
+	on: settings.player_tooltip,
+})}}
+    
+{{ forms.textField({
+        label: 'flowplayerdrive_settings_player_volume_name'|t,
+        id: 'player_volume',
+        name: 'player_volume',
+        value: settings.player_volume,
+        placeholder: '1.0',
+        instructions: 'flowplayerdrive_settings_player_volume_desc'|t,
+    }) }}
+    
+    
+<h2>{{'flowplayerdrive_settings_instructions_heading'|t}}</h2>
+<p>{{'flowplayerdrive_settings_instructions_desc1'|t}}</p>
+<p>{{'flowplayerdrive_settings_instructions_desc2'|t}}</p>

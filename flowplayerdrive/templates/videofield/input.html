@@ -7,7 +7,7 @@
  #}
 <div class="select">
 	<select name="{{ name }}">
-		<option value="0" {%if value == 0%}selected{%endif%}>{{'Choose a video from flowplayer drive'|t}}</option>
+		<option value="0" {%if value == 0%}selected{%endif%}>{{'flowplayerdrive_field_option1'|t}}</option>
 		{% for id,video in videos %}
 		<option value="{{id}}" {%if id == value%}selected{%endif%}>{{video}}</option>
 		{% endfor %}
