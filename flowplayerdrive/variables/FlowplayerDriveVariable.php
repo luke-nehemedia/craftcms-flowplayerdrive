@@ -29,7 +29,7 @@ class FlowplayerDriveVariable
 	   // Render player
 	   $html = craft()->templates->render('videofield/render', array(
            'settings' => craft()->plugins->getPlugin('flowplayerdrive')->getSettings(),
-           'video' => $entry
+           'video' => $entry->video
        ));
 
 	   // restore template Path
